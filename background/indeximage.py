@@ -29,3 +29,14 @@ def index(filename):
         np.save('hashstr.npy', data_np)
     except IOError : 
         np.save('hashstr.npy', new_np)
+        
+def delete(filename):
+    try:
+        data_np = np.load('hashstr.npy')
+        for i in range(len(data_np)):
+            if data_np[i][1] == filename:
+                data_np = np.delete(data_np, i, 0)
+        np.save('hashstr.npy', data_np)
+        return 1
+    except IOError : 
+        return 0

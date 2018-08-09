@@ -73,6 +73,7 @@ export default {
   },
   watch:{
     currentPicIndex(val){
+        console.log(this.data[this.currentClass][this.currentPicIndex].url)
         this.preview = true
         this.uploading = false
     },
@@ -142,12 +143,6 @@ export default {
     handleCancleUpload() {
       this.uploading = false
       this.preview = true
-    },
-    selectPic(index){
-      this.currentPicIndex = index
-    },
-    selectClass(index){
-      this.currentClassIndex = index
     },
     deletePic(index){
         this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {

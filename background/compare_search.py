@@ -18,4 +18,3 @@ def comp(filename):
     c = np.delete(c,0,1)
     return c.tolist()
 
-comp("./testdata/tigertest.jpg")

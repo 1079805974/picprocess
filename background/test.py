@@ -5,6 +5,7 @@ import json
 import shutil
 import compare_search as cs
 import indeximage as ii
+import re
 
 class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
@@ -42,7 +43,11 @@ class SearchLikeHandler(BaseHandler):
         result = cs.comp('./static/searchlike/' + file_name)
         llll = []
         for index in range(6):
-            llll.append(result[index][0])
+            print(result[index][0])
+            dirArr = result[index][0].split('/')
+            length = len(dirArr)
+            filename = dirArr[length-2] + '/' + dirArr[length-1]
+            llll.append('./dataset/' + filename)
         self.write(json.dumps(llll))
 
 class PicList(BaseHandler):
@@ -74,22 +79,27 @@ class ClassHandler(BaseHandler):
 class PicHandler(BaseHandler):
     def delete(self):
         url = self.get_argument('url')
+        url = url.replace('.', './static' ,1)
         try:
             os.remove(url)
+            ii.delete(url)
             print('delete a pic' + url)
         except:
             self.set_status(500)
         self.write('ok')
 
 def make_app():
+    current_path = os.path.dirname(__file__)
     return tornado.web.Application([
-        ("/", MainHandler),
         ("/piclist", PicList),
         ("/upload", UploadHandler),
         ("/pic", PicHandler),
         ("/class", ClassHandler),
-        ("/searchlike", SearchLikeHandler)
-    ])
+        ("/searchlike", SearchLikeHandler),
+        (r'^/(.*?)$', tornado.web.StaticFileHandler, {"path":os.path.join(current_path, "static"), "default_filename":"index.html"}),
+    ],
+        static_path=os.path.join(current_path, "statics"),
+    )
 
 if __name__ == "__main__":
     app = make_app()

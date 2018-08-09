@@ -63,6 +63,7 @@ export default {
               message: "上传成功!"
             });
             this.pics = res.data
+            this.fileList = []
           });
       });
     }

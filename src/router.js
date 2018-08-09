@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import DataManage from './views/DataManage.vue'
 import SearchLike from './views/SearchLike.vue'
+import Identify from './views/Identify.vue'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: SearchLike
+    },
+    {
+      path:'/Identify',
+      name:Identify,
+      component:Identify
     }
   ]
 })
